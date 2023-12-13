@@ -1,8 +1,23 @@
-import React from 'react'
-import CartSummary from './CartSummary'
-import { Button, Container, Dropdown, Menu } from 'semantic-ui-react'
+import React , {useState} from 'react';
+import CartSummary from './CartSummary';
+import { Container, Menu } from 'semantic-ui-react';
+import SignedOut from './SignedOut';
+import SingnedIn from './SingnedIn';
+
 
 export default function Navi() {
+    const [isAuthenticated, setIsAuthenticated] = useState(true)
+    
+
+    function handleSignOut (params){
+        setIsAuthenticated(false)
+        
+    }
+
+    function handleSingIn (params){
+        setIsAuthenticated(true)
+    }
+
     return (
         <div>
             <Menu inverted fixed = "top">
@@ -15,10 +30,8 @@ export default function Navi() {
                     />
                     <Menu.Menu position='right'>
                         <CartSummary />
-                        <Menu.Item>
-                            <Button primary>Sign Up</Button>
-                        </Menu.Item>
-                    </Menu.Menu>
+                        {isAuthenticated?<SingnedIn signOut={handleSignOut} bisey="1"/>:<SignedOut signIn={handleSingIn}/>}
+                        </Menu.Menu>
                 </Container>
             </Menu>
         </div>
